@@ -40,5 +40,5 @@ jobs:
         run: |
           netlify deploy --prod \
             --dir=out \
-            --site ${{ secrets.NETLIFY_GITHUB_TOKEN }} \
-            --auth ${{ secrets.NETLIFY_TOKEN }}
+            --site ${{ secrets.NETLIFY_API_TOKEN }} \
+            --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
