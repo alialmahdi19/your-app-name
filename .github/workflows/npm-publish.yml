@@ -7,17 +7,17 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20'  
-
+          node-version: '20'
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
       - name: Install Dependencies
         run: npm install
 
@@ -26,3 +26,19 @@ jobs:
 
       - name: verify output folder
         run: ls -l out
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: YOUR-APP-NAME build package
+          path: out
+
+      - name: Install Netlify CLI 
+        run: npm install -g netlify-cli
+      
+      - name: Deploy to Netlify
+        run: |
+          netlify deploy --prod \
+            --dir=out \
+            --site ${{ secrets.NETLIFY_GITHUB_TOKEN }} \
+            --auth ${{ secrets.NETLIFY_TOKEN }}
